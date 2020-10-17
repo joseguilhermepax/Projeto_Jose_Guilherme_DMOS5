@@ -1,0 +1,2 @@
+include ':app'
+rootProject.name = "Projeto_Jose_Guilherme_DMOS5"
