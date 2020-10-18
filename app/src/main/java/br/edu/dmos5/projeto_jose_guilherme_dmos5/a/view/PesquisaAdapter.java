@@ -16,9 +16,14 @@ import br.edu.dmos5.projeto_jose_guilherme_dmos5.a.Model.Pesquisa;
 public class PesquisaAdapter extends RecyclerView.Adapter<PesquisaAdapter.PesquisaViewHolder> {
 
     private List<Pesquisa> pesquisaList;
+    private static PesquisaClickListener clickListener;
 
     public PesquisaAdapter(@NonNull List<Pesquisa> pesquisas){
         this.pesquisaList = pesquisas;
+    }
+
+    public void setClickListener(PesquisaClickListener clickListener) {
+        PesquisaAdapter.clickListener = clickListener;
     }
 
     @NonNull
@@ -35,6 +40,7 @@ public class PesquisaAdapter extends RecyclerView.Adapter<PesquisaAdapter.Pesqui
     @Override
     public void onBindViewHolder(@NonNull PesquisaViewHolder holder, int position) {
         holder.pesquisaTextView.setText(pesquisaList.get(position).getNomePesquisa());
+        holder.pesquisaIDTextView.setText((pesquisaList.get(position).getId().toString()));
     }
 
     @Override
@@ -42,13 +48,26 @@ public class PesquisaAdapter extends RecyclerView.Adapter<PesquisaAdapter.Pesqui
         return pesquisaList.size();
     }
 
-    public class PesquisaViewHolder extends RecyclerView.ViewHolder{
+    public class PesquisaViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         private TextView pesquisaTextView;
+        private TextView pesquisaIDTextView;
 
         public PesquisaViewHolder(@NonNull View itemView) {
+
             super(itemView);
-            pesquisaTextView =itemView.findViewById(R.id.textview_pesquisa);
+
+            pesquisaTextView   = itemView.findViewById(R.id.textview_pesquisa);
+            pesquisaIDTextView = itemView.findViewById(R.id.textview_pesquisa_id);
+
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            if(clickListener != null){
+                clickListener.onPesquisaClick(getAdapterPosition());
+            }
         }
     }
 }

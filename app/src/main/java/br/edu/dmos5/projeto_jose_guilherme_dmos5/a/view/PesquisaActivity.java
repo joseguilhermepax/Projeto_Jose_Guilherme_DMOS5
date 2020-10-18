@@ -89,7 +89,7 @@ public class PesquisaActivity extends AppCompatActivity {
             ufPesquisar = embrulho.getString(MainActivity.KEY_PESQUISA);
         }
 
-        Toast.makeText(PesquisaActivity.this, "UF: " + ufPesquisar, Toast.LENGTH_SHORT).show();
+        Toast.makeText(PesquisaActivity.this, "Consultando API... ", Toast.LENGTH_SHORT).show();
     }
 
     private boolean checaPermissao(){
@@ -158,6 +158,8 @@ public class PesquisaActivity extends AppCompatActivity {
             public void onResponse(Call<Pesquisa> call, Response<Pesquisa> response) {
 
                 if(response.isSuccessful()){
+
+                    Toast.makeText(PesquisaActivity.this, "Busca realizada com sucesso! ", Toast.LENGTH_SHORT).show();
 
                     Pesquisa pesquisa = response.body();
 

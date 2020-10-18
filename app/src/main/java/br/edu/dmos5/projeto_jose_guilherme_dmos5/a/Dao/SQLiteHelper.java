@@ -13,6 +13,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "pesquisa.db";
     public static final String TABELA_PESQUISA = "pesquisa";
     public static final String COLUNA_UID = "uid";
+    public static final String COLUNA_ID = "id";
     public static final String COLUNA_UF = "uf";
     public static final String COLUNA_ESTADO ="estado";
     public static final String COLUNA_CASOS = "casos";
@@ -41,6 +42,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         String sql;
 
         sql = "CREATE TABLE " + TABELA_PESQUISA + " (";
+        sql += COLUNA_ID + " INTEGER PRIMARY KEY, ";
         sql += COLUNA_UID + " TEXT NOT NULL, ";
         sql += COLUNA_UF + " TEXT NOT NULL, ";
         sql += COLUNA_ESTADO + " TEXT NOT NULL, ";

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".a.view.PesquisaActivity">
+    tools:context=".a.view.DetalhesPesquisaActivity">
 
     <TextView
         android:id="@+id/label_uf"
@@ -29,18 +29,18 @@
         app:layout_constraintTop_toBottomOf="@+id/label_uf" />
 
     <TextView
-    android:id="@+id/label_estado"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="5dp"
-    android:textAlignment="center"
-    android:text="@string/estado"
-    android:textColor="#096A38"
-    android:textSize="18sp"
-    android:textStyle="bold"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/textview_uf" />
+        android:id="@+id/label_estado"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textAlignment="center"
+        android:text="@string/estado"
+        android:textColor="#096A38"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textview_uf" />
 
     <TextView
         android:id="@+id/textview_estado"

@@ -3,6 +3,7 @@ package br.edu.dmos5.projeto_jose_guilherme_dmos5.a.Dao;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
@@ -27,14 +28,15 @@ public class PesquisaDao {
 
         ContentValues valores = new ContentValues();
 
-        valores.put(SQLiteHelper.COLUNA_UID, pesquisa.getUid());
-        valores.put(SQLiteHelper.COLUNA_UF, pesquisa.getUf());
-        valores.put(SQLiteHelper.COLUNA_ESTADO, pesquisa.getState());
-        valores.put(SQLiteHelper.COLUNA_CASOS, pesquisa.getCasos());
-        valores.put(SQLiteHelper.COLUNA_MORTES, pesquisa.getMortes());
+        valores.put(SQLiteHelper.COLUNA_ID,        pesquisa.getId());
+        valores.put(SQLiteHelper.COLUNA_UID,       pesquisa.getUid());
+        valores.put(SQLiteHelper.COLUNA_UF,        pesquisa.getUf());
+        valores.put(SQLiteHelper.COLUNA_ESTADO,    pesquisa.getState());
+        valores.put(SQLiteHelper.COLUNA_CASOS,     pesquisa.getCasos());
+        valores.put(SQLiteHelper.COLUNA_MORTES,    pesquisa.getMortes());
         valores.put(SQLiteHelper.COLUNA_SUSPEITOS, pesquisa.getSuspeitos());
         valores.put(SQLiteHelper.COLUNA_RECUSADOS, pesquisa.getRecusados());
-        valores.put(SQLiteHelper.COLUNA_DATA, pesquisa.getData());
+        valores.put(SQLiteHelper.COLUNA_DATA,      pesquisa.getData());
 
         mSqLiteDatabase = mHelper.getWritableDatabase();
 
@@ -51,6 +53,7 @@ public class PesquisaDao {
         pesquisaList = new ArrayList<>();
 
         String colunas[] = new String[]{
+            SQLiteHelper.COLUNA_ID,
             SQLiteHelper.COLUNA_UID,
             SQLiteHelper.COLUNA_UF,
             SQLiteHelper.COLUNA_ESTADO,
@@ -76,14 +79,15 @@ public class PesquisaDao {
         while (mCursor.moveToNext()){
 
             pesquisa = new Pesquisa(
-                mCursor.getString(0),
+                mCursor.getInt(0),
                 mCursor.getString(1),
                 mCursor.getString(2),
                 mCursor.getString(3),
                 mCursor.getString(4),
                 mCursor.getString(5),
                 mCursor.getString(6),
-                mCursor.getString(7)
+                mCursor.getString(7),
+                mCursor.getString(8)
             );
 
             pesquisaList.add(pesquisa);
@@ -94,5 +98,61 @@ public class PesquisaDao {
         mSqLiteDatabase.close();
 
         return pesquisaList;
+    }
+
+    public Pesquisa recupera(Integer id) throws SQLException {
+
+        Pesquisa pesquisa;
+        Cursor mCursor;
+
+        String colunas[] = new String[]{
+            SQLiteHelper.COLUNA_ID,
+            SQLiteHelper.COLUNA_UID,
+            SQLiteHelper.COLUNA_UF,
+            SQLiteHelper.COLUNA_ESTADO,
+            SQLiteHelper.COLUNA_CASOS,
+            SQLiteHelper.COLUNA_MORTES,
+            SQLiteHelper.COLUNA_SUSPEITOS,
+            SQLiteHelper.COLUNA_RECUSADOS,
+            SQLiteHelper.COLUNA_DATA
+        };
+
+        String clausulaWhere = SQLiteHelper.COLUNA_ID + " = ?";
+
+        String argumentos[] = new String[]{
+                id.toString()
+        };
+
+        mSqLiteDatabase = mHelper.getReadableDatabase();
+
+        mCursor = mSqLiteDatabase.query(
+            SQLiteHelper.TABELA_PESQUISA,
+            colunas,
+            clausulaWhere,
+            argumentos,
+            null,
+            null,
+            null
+        );
+
+        if(mCursor.moveToNext()){
+
+            pesquisa = new Pesquisa(
+                mCursor.getInt(0),
+                mCursor.getString(1),
+                mCursor.getString(2),
+                mCursor.getString(3),
+                mCursor.getString(4),
+                mCursor.getString(5),
+                mCursor.getString(6),
+                mCursor.getString(7),
+                mCursor.getString(8));
+
+        }
+        else{
+            throw new SQLException("Pesquisa não encontrada.");
+        }
+
+        return pesquisa;
     }
 }

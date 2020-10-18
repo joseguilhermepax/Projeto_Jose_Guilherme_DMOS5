@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class Pesquisa implements Serializable {
 
+    private Integer id;
     private String uid;
     private String uf;
     private String state;
@@ -13,15 +14,28 @@ public class Pesquisa implements Serializable {
     private String refuses;
     private String datetime;
 
-    public Pesquisa (String uid, String uf, String state, String cases, String deaths, String suspects, String refuses, String datetime) {
+    public Pesquisa ( String uid, String uf, String state, String cases, String deaths, String suspects, String refuses, String datetime) {
 
-        this.uid = uid;
-        this.uf = uf;
-        this.state = state;
-        this.cases = cases;
-        this.deaths = deaths;
+        this.uid      = uid;
+        this.uf       = uf;
+        this.state    = state;
+        this.cases    = cases;
+        this.deaths   = deaths;
         this.suspects = suspects;
-        this.refuses = refuses;
+        this.refuses  = refuses;
+        this.datetime = datetime;
+    }
+
+    public Pesquisa (Integer id, String uid, String uf, String state, String cases, String deaths, String suspects, String refuses, String datetime) {
+
+        this.id       = id;
+        this.uid      = uid;
+        this.uf       = uf;
+        this.state    = state;
+        this.cases    = cases;
+        this.deaths   = deaths;
+        this.suspects = suspects;
+        this.refuses  = refuses;
         this.datetime = datetime;
     }
 
@@ -32,7 +46,19 @@ public class Pesquisa implements Serializable {
 
         String[] DataSeparado = DataText.split("-");
 
-        return state + " " + DataSeparado[2] + "/" + DataSeparado[1] + "/" + DataSeparado[0] + " " + HoraText;
+        if (DataSeparado.length > 1) {
+            return state + " " + DataSeparado[2] + "/" + DataSeparado[1] + "/" + DataSeparado[0] + " " + HoraText;
+        }
+
+        return state + " " + datetime;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getUid() {
@@ -92,6 +118,16 @@ public class Pesquisa implements Serializable {
     }
 
     public String getData() {
+
+        String DataText = datetime.substring(0, 10);
+        String HoraText = datetime.substring(11, 19);
+
+        String[] DataSeparado = DataText.split("-");
+
+        if (DataSeparado.length > 1) {
+            return DataSeparado[2] + "/" + DataSeparado[1] + "/" + DataSeparado[0] + " " + HoraText;
+        }
+
         return datetime;
     }
 

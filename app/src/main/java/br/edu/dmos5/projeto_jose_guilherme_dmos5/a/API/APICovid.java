@@ -8,7 +8,7 @@ import retrofit2.http.Path;
 public interface APICovid {
 
     String URL = "https://covid19-brazil-api.now.sh/api/report/v1/brazil/uf/";
-    
+
     @GET("{estado}")
     Call<Pesquisa> getDados(@Path("estado") String uf);
 }

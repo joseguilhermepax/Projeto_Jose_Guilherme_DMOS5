@@ -60,6 +60,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(pesquisaAdapter);
 
+        pesquisaAdapter.setClickListener(new PesquisaClickListener() {
+            @Override
+            public void onPesquisaClick(int position) {
+                Intent intent = new Intent(getApplicationContext(), DetalhesPesquisaActivity.class);
+                intent.putExtra("ID", pesquisaList.get(position).getId());
+                startActivity(intent);
+            }
+        });
+
         spinner = findViewById(R.id.estados_spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.siglas_estados, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
